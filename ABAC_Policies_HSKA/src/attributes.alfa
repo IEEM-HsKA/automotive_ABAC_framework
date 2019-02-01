@@ -1,0 +1,25 @@
+namespace com.hska.diagnosis {
+	namespace attributes{
+		attribute role{
+			category = subjectCat
+			id = "role"
+			type = string			
+		}
+		attribute resourceType{
+			category = resourceCat
+			id = "resourceType"
+			type = string			
+		}
+		attribute action{
+			category = actionCat
+			id = "action"
+			type = string			
+		}
+		attribute testerConnectionStatus{
+			category = environmentCat
+			id = "testerConnectionStatus"
+			type = string
+				
+		}
+	}
+}

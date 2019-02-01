@@ -1,0 +1,42 @@
+namespace com.hska.diagnosis {
+	import com.hsk.diagnosis.attributes.*
+	/**
+	 * Mechnaiker darf Diagnosedaten aller 
+	 * Steuergeraerte lesen wenn Tester angeschlossen ist.
+	 */
+	policy AccessDiagnosisData{
+		target clause attributes.role=="engineer" or
+			attributes.role=="technician" or
+			attributes.role=="mechanic"
+		apply firstApplicable
+		readDiagnosis
+	}
+	
+	 /**
+	 * Ingenieur oder Techniker darf Diagnosedaten aller 
+	 * Steuergeraerte lesen und Parameter aendern wenn Tester angeschlossen ist.
+	 */
+	policy ExtendedAccessForEngineersAndTechnician{
+		target clause 
+			attributes.role=="engineer" or
+			attributes.role=="technician"
+		apply firstApplicable
+		permitExtendedAccess
+	}
+	
+	rule readDiagnosis{
+		permit
+		target clause 
+			attributes.action=="read" and
+			attributes.testerConnectionStatus=="connected" and
+			attributes.resourceType=="diagnosisData"
+	}
+	rule permitExtendedAccess{
+		permit
+		target clause 
+			attributes.action=="extendedAccess" and
+			attributes.testerConnectionStatus=="connected" and
+			attributes.resourceType=="parameters"
+	}
+
+}

@@ -1,0 +1,201 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: Extern ECU_2 ECU_1 PEP PDP
+VAL_TABLE_ ABAC_Resource_Resp 3 "Permit" 2 "Deny" ;
+VAL_TABLE_ ABAC_Attribute_Category 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_TABLE_ ABAC_Decision 255 "Indeterminate" 3 "Permit" 2 "Deny" 1 "Not_Applicabel" ;
+VAL_TABLE_ ABAC_Commands 49 "Lock_Resource" 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+
+
+BO_ 1587 PEP_ABAC_Lock_ResourceMsg: 6 PEP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1586 PDP_ABAC_Lock_ResourceMsg: 6 PDP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PEP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PEP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PEP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PEP
+
+BO_ 805 ECU_2_Resource: 1 ECU_2
+ SG_ Counter : 0|8@1+ (1,0) [0|0] ""  Extern
+
+BO_ 848 ECU_1_Resource: 1 ECU_1
+ SG_ Counter : 0|8@1+ (1,0) [0|0] ""  Extern
+
+BO_ 1809 ECU2_Send_Nonce: 8 ECU_2
+ SG_ ABAC_Nonce : 48|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 32|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_Value : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1808 ECU1_Send_Nonce: 8 ECU_1
+ SG_ ABAC_Nonce : 48|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_Value : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_ID : 32|16@1+ (1,0) [0|65535] ""  PDP
+
+BO_ 1573 PDP_ABAC_Get_Nonce: 6 PDP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  ECU_2,ECU_1
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  ECU_2,ECU_1
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  ECU_2,ECU_1
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  ECU_2,ECU_1
+
+BO_ 1793 ECU2_ABAC_ECU_Resp: 5 ECU_2
+ SG_ ABAC_Attribute_Value : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 0|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_ResourceResp : 32|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1792 ECU1_ABAC_ECU_Resp: 5 ECU_1
+ SG_ ABAC_Attribute_Value : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 0|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_ResourceResp : 32|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1569 PEP_ABAC_DecisionMsg: 7 PEP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Decision : 48|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1537 Extern_ABAC_AccessMsg: 6 Extern
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PEP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PEP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PEP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PEP
+
+BO_ 1585 PDP_ABAC_Unlock_ResourceMsg: 8 PDP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  ECU_2,ECU_1
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  ECU_2,ECU_1
+ SG_ ABAC_Key : 48|16@1+ (1,0) [0|65535] ""  ECU_2,ECU_1
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  ECU_2,ECU_1
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  ECU_2,ECU_1
+
+BO_ 1584 PEP_ABAC_Unlock_ResourceMsg: 8 PEP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Key : 48|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1568 PDP_ABAC_DecisionMsg: 7 PDP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PEP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PEP
+ SG_ ABAC_Decision : 48|8@1+ (1,0) [0|255] ""  PEP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PEP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PEP
+
+BO_ 1552 ABAC_InformationMsg: 6 PDP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+
+BO_ 1536 PEP_ABAC_AccessMsg: 6 PEP
+ SG_ ABAC_Attribute_Value : 32|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Attribute_ID : 16|16@1+ (1,0) [0|65535] ""  PDP
+ SG_ ABAC_Command : 0|8@1+ (1,0) [0|255] ""  PDP
+ SG_ ABAC_Attribute_Type : 8|8@1+ (1,0) [0|255] ""  PDP
+
+BO_TX_BU_ 1552 : PEP,PDP;
+
+
+BA_DEF_ BU_  "NodeLayerModules" STRING ;
+BA_DEF_ BU_  "NmStationAddress" HEX 0 0;
+BA_DEF_ BU_  "NmNode" INT 0 255;
+BA_DEF_ SG_  "GenSigCycleTime" INT 5 500;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_ BO_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnChange";
+BA_DEF_ BO_  "GenMsgFastOnStart" INT 10 500;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cyclic","spontaneous","adaptive";
+BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 0;
+BA_DEF_ BO_  "GenMsgTimeoutTime" INT 0 1000;
+BA_DEF_ BO_  "GenMsgDelayTime" INT 10 500;
+BA_DEF_ BO_  "GenMsgCycleTimeFast" INT 1 50;
+BA_DEF_ BO_  "GenMsgCycleTimeActive" INT 1 100;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 5 500;
+BA_DEF_DEF_  "NodeLayerModules" "";
+BA_DEF_DEF_  "NmStationAddress" 0;
+BA_DEF_DEF_  "NmNode" 0;
+BA_DEF_DEF_  "GenSigCycleTime" 100;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "GenSigSendType" "Cyclic";
+BA_DEF_DEF_  "GenMsgFastOnStart" 10;
+BA_DEF_DEF_  "GenMsgSendType" "cyclic";
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenMsgTimeoutTime" 0;
+BA_DEF_DEF_  "GenMsgDelayTime" 10;
+BA_DEF_DEF_  "GenMsgCycleTimeFast" 10;
+BA_DEF_DEF_  "GenMsgCycleTimeActive" 10;
+BA_DEF_DEF_  "GenMsgCycleTime" 100;
+BA_ "NmStationAddress" BU_ Extern 80;
+BA_ "NmStationAddress" BU_ ECU_2 768;
+BA_ "NmStationAddress" BU_ ECU_1 848;
+BA_ "NmStationAddress" BU_ PEP 256;
+BA_ "NmStationAddress" BU_ PDP 512;
+VAL_ 1587 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1587 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1586 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1586 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1809 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1809 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1808 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1808 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1573 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1573 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1793 ABAC_ResourceResp 3 "Permit" 2 "Deny" ;
+VAL_ 1792 ABAC_ResourceResp 3 "Permit" 2 "Deny" ;
+VAL_ 1569 ABAC_Decision 255 "Indeterminate" 3 "Permit" 2 "Deny" 1 "Not_Applicabel" ;
+VAL_ 1569 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1569 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1537 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1537 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1585 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1585 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1584 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1584 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1568 ABAC_Decision 255 "Indeterminate" 3 "Permit" 2 "Deny" 1 "Not_Applicabel" ;
+VAL_ 1568 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1568 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1552 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1552 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+VAL_ 1536 ABAC_Command 53 "Nonce" 48 "Unlock_Resource" 24 "Decision" 21 "Information" 6 "Access" ;
+VAL_ 1536 ABAC_Attribute_Type 37 "Enviroment" 32 "Resource" 21 "Action" 16 "Access_Subject" 0 "None" ;
+

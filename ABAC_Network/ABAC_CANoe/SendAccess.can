@@ -1,0 +1,104 @@
+/*@!Encoding:1252*/
+includes
+{
+  
+}
+
+variables
+{
+  message CAN1::Extern_ABAC_AccessMsg accessMsg;
+  message CAN1::ABAC_InformationMsg infoMsg;
+  enum ABAC_Command {
+    ACCESS = 0x06,
+    INFORMATION = 0x15,
+    DECISIONRESP = 0x18,
+    UNLOCK_RESOURCE = 0x30,
+    NONCE = 0x35
+  };
+  enum AttributeCategory {
+  	NONE = 0x00,
+  	ACCESS_SUBJECT = 0x10,
+  	ACTION = 0x15,
+  	RESOURCE = 0x20,
+  	ENVIRONMENT = 0x25
+  };
+}
+
+//const Attribute role_engineer(0x29A7, 0x9D12, ACCESS_SUBJECT);
+//const Attribute role_technician(0x29A7, 0xEB91, ACCESS_SUBJECT);
+//const Attribute role_mechanic(0x29A7, 0xBCD8, ACCESS_SUBJECT);
+
+//const Attribute action_read(0x418C, 0xECAE, ACTION);
+//const Attribute testerConnectionStatus_connected(0xE6D1, 0x06AA, ENVIRONMENT);
+//const Attribute resourceType_diagnosisData(0x6F47, 0x2092, RESOURCE);
+//
+//const Attribute action_extendedAccess(0x418C, 0x8339, ACTION);
+//const Attribute testerConnectionStatus_connected(0xE6D1, 0x06AA, ENVIRONMENT);
+//const Attribute resourceType_parameters(0x6F47, 0x166E, RESOURCE);
+
+on sysvar_update ABAC::testerConnection {
+  infoMsg.can = 1;
+  infoMsg.msgChannel = 1;
+  infoMsg.dir = tx;
+  if(@this == 1){
+    infoMsg.ABAC_Command = INFORMATION;
+    infoMsg.ABAC_Attribute_Type = ENVIRONMENT;
+    infoMsg.ABAC_Attribute_ID = 0xE6D1;
+    infoMsg.ABAC_Attribute_Value = 0x06AA;
+    output(infoMsg);  
+  }
+  if(@this == 0){
+    infoMsg.ABAC_Command = INFORMATION;
+    infoMsg.ABAC_Attribute_Type = ENVIRONMENT;
+    infoMsg.ABAC_Attribute_ID = 0xE6D1;
+    infoMsg.ABAC_Attribute_Value = 0x0000;
+    output(infoMsg);  
+  }
+}
+
+on sysvar_update ABAC::sendAcces {
+ if(@this == 1) {
+  accessMsg.can = 1;
+  accessMsg.msgChannel = 1;
+  accessMsg.dir = tx;
+   if(@ABAC::Resources == DiagnosisData){
+    accessMsg.ABAC_Command = ACCESS;
+    accessMsg.ABAC_Attribute_Type = ACCESS_SUBJECT;
+    accessMsg.ABAC_Attribute_ID = 0x29A7;
+    accessMsg.ABAC_Attribute_Value = @ABAC::role;
+    output(accessMsg);
+    
+    accessMsg.ABAC_Command = ACCESS;
+    accessMsg.ABAC_Attribute_Type = ACTION;
+    accessMsg.ABAC_Attribute_ID = 0x418C;
+    accessMsg.ABAC_Attribute_Value = 0xECAE;
+    output(accessMsg);
+    
+    accessMsg.ABAC_Command = ACCESS;
+    accessMsg.ABAC_Attribute_Type = RESOURCE;
+    accessMsg.ABAC_Attribute_ID = 0x6F47;
+    accessMsg.ABAC_Attribute_Value = 0x2092;
+    output(accessMsg);
+   }
+   else if(@ABAC::Resources == Parameters){
+    accessMsg.ABAC_Command = ACCESS;
+    accessMsg.ABAC_Attribute_Type = ACCESS_SUBJECT;
+    accessMsg.ABAC_Attribute_ID = 0x29A7;
+    accessMsg.ABAC_Attribute_Value = @ABAC::role;
+    output(accessMsg);
+    
+    accessMsg.ABAC_Command = ACCESS;
+    accessMsg.ABAC_Attribute_Type = ACTION;
+    accessMsg.ABAC_Attribute_ID = 0x418C;
+    accessMsg.ABAC_Attribute_Value = 0x8339;
+    output(accessMsg);
+    
+    accessMsg.ABAC_Command = ACCESS;
+    accessMsg.ABAC_Attribute_Type = RESOURCE;
+    accessMsg.ABAC_Attribute_ID = 0x6F47;
+    accessMsg.ABAC_Attribute_Value = 0x166E;
+    output(accessMsg);
+   }
+  }
+
+}
